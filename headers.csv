@@ -1,0 +1,6 @@
+Colonne,Type ,Description_FR,Description_EN,Exemple
+dep,String,Departement,State,01
+jour,Date,Jour,Day,2020-05-13
+t,integer,Nombre de test réalisés,Number of tests performed,2141
+cl_age90,integer,Classe d'age,Age class,09
+p,integer,Nombre de test positifs,Number of positive tests,34
