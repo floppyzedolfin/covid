@@ -13,7 +13,7 @@ func TestServer_Load(t *testing.T) {
 		loadedData map[string][]entry
 	} {
 		"2 entries": {
-			file: "file://testdata/data.csv",
+			file: "http://localhost:8080/./testdata/data.csv",
 			loadedData: map[string][]entry{},
 		},
 	}

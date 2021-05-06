@@ -34,7 +34,7 @@ func (s Server) departementsWithData(c *fiber.Ctx) {
 	for id := range s.data {
 		d.Departements = append(d.Departements, id)
 	}
-
+	sort.Strings(d.Departements)
 	c.JSON(d)
 }
 
@@ -114,9 +114,9 @@ func (s Server) rangeDates(c *fiber.Ctx) {
 				continue
 			}
 			switch {
-			case dateBefore(r.MinDate, entry.Date):
+			case dateBefore(entry.Date, r.MinDate):
 				r.MinDate = entry.Date
-			case dateBefore(entry.Date, r.MaxDate):
+			case dateBefore(r.MaxDate, entry.Date):
 				r.MaxDate = entry.Date
 			}
 		}
