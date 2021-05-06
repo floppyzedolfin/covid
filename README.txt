@@ -65,3 +65,8 @@ API
 - curl localhost:8405/departements => renvoie la liste des départements avec de la donnée
 - curl localhost:8405/departement/${DEPARTEMENT_ID}/${DATE} => renvoie les données pour ce département à la date voulue
 - curl localhost:8405/departements/dates/${MIN_DATE}/${MAX_DATE} => renvoie les données des départements entre les dates voulues
+
+
+Choix architecturaux:
+- Passer par fiber pour avoir du code rapide à écrire (ma premiere piste était d'utiliser des protobuff, pour un gos coût et pas un grand gain)
+- Exposer des endpoints avec des paths "intuitifs"

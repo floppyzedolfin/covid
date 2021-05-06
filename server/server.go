@@ -30,7 +30,6 @@ func New() *Server {
 	s := Server{}
 	s.data = make(map[string][]entry, 0)
 	s.app = fiber.New()
-	err := s.load()
 	if err != nil {
 		panic(err)
 	}
@@ -43,14 +42,20 @@ func (s *Server) Listen(port int) {
 }
 
 func (s *Server) setupRoutes() {
+	// GET to load data from source
+	s.app.Get("/load", s.Load)
+
 	// GET on all deps
 	s.app.Get("/departements", s.DepartementsWithData)
 
 	// GET on departement and data
 	s.app.Get("/departement/:id/:date", s.DepartementWithDate)
 
-	// POST on departements with range of dates
+	// GET on departements with range of dates
 	s.app.Get("/departements/dates/:minDate/:maxDate", s.DepartementsWithDates)
+
+	// GET national data
+	s.app.Get("/national/dates/:minDate/:maxDate", s.NationalWithDates)
 }
 
 func (s Server) DepartementsWithData(c *fiber.Ctx) {
@@ -99,7 +104,29 @@ func (s Server) DepartementsWithDates(c *fiber.Ctx) {
 			}
 		}
 	}
-	return c.JSON(dwd)
+	c.JSON(dwd)
+}
+
+type nationalData struct {
+	TestsNumbers int `json:"testsNumber"`
+	PositiveTests int `json:"positiveTests"`
+	Ratio float32 `json:"ratio"`
+}
+
+func (s Server) NationalWithDates(c *fiber.Ctx) {
+	n := nationalData{}
+	minDate := c.Params("minDate")
+	maxDate := c.Params("maxDate")
+	for _, entries := range s.data {
+		for _, entry := range entries {
+			if dateBefore(minDate, entry.Date) && dateBefore(entry.Date, maxDate) {
+				n.TestsNumbers += entry.TestsPerformed
+				n.PositiveTests += entry.PositiveTests
+			}
+		}
+	}
+	n.Ratio = float32(n.PositiveTests) / float32(n.TestsNumbers)
+	c.JSON(n)
 }
 
 func dateBefore(lhs, rhs string) bool {
@@ -110,13 +137,13 @@ func dateBefore(lhs, rhs string) bool {
 	return tLeft.Before(tRight)
 }
 
-func (s *Server) load() error {
+func (s *Server) Load(c *fiber.Ctx)  {
 	// first download data
 	fmt.Printf("downloading data")
 	fileURL := "https://www.data.gouv.fr/fr/datasets/r/406c6a23-e283-4300-9484-54e78c8ae675"
 	resp, err := http.Get(fileURL)
 	if err != nil {
-		return fmt.Errorf("unable to download file %s: %w", fileURL, err)
+		panic(fmt.Sprintf("unable to download file %s: %w", fileURL, err))
 	}
 
 	r := csv.NewReader(resp.Body)
@@ -129,14 +156,14 @@ func (s *Server) load() error {
 			break
 		}
 		if err != nil {
-			return fmt.Errorf("unable to read entry: %w", err)
+			panic(fmt.Sprintf("unable to read entry: %w", err)
 		}
 		if headersOn {
 			headersOn = false
 			continue
 		}
 		if len(line) != 6 {
-			return fmt.Errorf("unvalid number of fields, expected 5, got %d", line)
+			panic(fmt.Sprintf("unvalid number of fields, expected 5, got %d", line)
 		}
 		// parse the entry
 		var e entry
@@ -144,15 +171,15 @@ func (s *Server) load() error {
 		e.Date = line[1]
 		e.PositiveTests, err = strconv.Atoi(line[2])
 		if err != nil {
-			return fmt.Errorf("invalid line %s, can't get positive tests: %w", line, err)
+			panic(fmt.Sprintf("invalid line %s, can't get positive tests: %w", line, err)
 		}
 		e.TestsPerformed, err = strconv.Atoi(line[3])
 		if err != nil {
-			return fmt.Errorf("invalid line %s, can't get number of tests: %w", line, err)
+			panic(fmt.Sprintf("invalid line %s, can't get number of tests: %w", line, err)
 		}
 		e.AgeClass, err = strconv.Atoi(line[4])
 		if err != nil {
-			return fmt.Errorf("invalid line %s, can't get age class: %w", line, err)
+			panic(fmt.Sprintf("invalid line %s, can't get age class: %w", line, err)
 		}
 		if len(s.data[e.State]) == 0 {
 			s.data[e.State] = make([]entry, 1)
@@ -161,5 +188,5 @@ func (s *Server) load() error {
 			s.data[e.State] = append(s.data[e.State], e)
 		}
 	}
-	return nil
+
 }
