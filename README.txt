@@ -56,3 +56,12 @@ Quelques questions :
 - quelles seraient les modifications à apporter si nous souhaitons industrialiser cette API, par exemple sous la forme d'une application mobile ?
 - avec-vous une idée sur une optimisation, une techno de BDD qui serait adaptée ?
 - avez-vous des remarques ou des points que vous souhaitez aborder ?
+
+
+
+============
+
+API
+- curl localhost:8405/departements => renvoie la liste des départements avec de la donnée
+- curl localhost:8405/departement/${DEPARTEMENT_ID}/${DATE} => renvoie les données pour ce département à la date voulue
+- curl localhost:8405/departements/dates/${MIN_DATE}/${MAX_DATE} => renvoie les données des départements entre les dates voulues
