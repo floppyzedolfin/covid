@@ -13,7 +13,7 @@ func (s *Server) apiRoutes() {
 	s.app.Get("/api/departements", s.departementsWithData)
 
 	// GET on departement and date
-	s.app.Get("/api/departement/:id/date/:date", s.departementDataWithDate)
+	s.app.Get("/api/departements/:id/dates/:date", s.departementDataWithDate)
 
 	// GET on departements with range of dates
 	s.app.Get("/api/departements/:ids/dates/:minDate/:maxDate", s.departementsWithDates)

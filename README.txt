@@ -63,7 +63,7 @@ Quelques questions :
 
 API:
 - curl localhost:8405/api/departements => renvoie la liste des départements avec de la donnée
-- curl localhost:8405/api/departement/${DEPARTEMENT_ID}/date/${DATE} => renvoie les données pour ce département à la date voulue
+- curl localhost:8405/api/departements/${DEPARTEMENT_ID}/dates/${DATE} => renvoie les données pour ce département à la date voulue
 - curl localhost:8405/api/departements/${DEPARTEMENT_IDS}/dates/${MIN_DATE}/${MAX_DATE} => renvoie les données des départements entre les dates voulues -- "${DEPARTEMENT_IDS}" est une liste séparée par des virgules (`01,02,75`)
 
 ADMIN:
@@ -71,7 +71,7 @@ ADMIN:
 
 ANALYTICS:
 - curl localhost:8405/analytics/national/dates/${MIN_DATE}/${MAX_DATE} => renvoie des informations niveau national
-- curl localhost:8405/analytics/departement/${DEPARTEMENT_ID}/brief => renvoie un résumé d'un département
+- curl localhost:8405/analytics/departements/${DEPARTEMENT_ID}/brief => renvoie un résumé d'un département
 - curl localhost:8405/analytics/dates/${DATE}/top5 => renvoie les 5 départements ayant le plus de tests postitifs par catégorie d'age
 
 

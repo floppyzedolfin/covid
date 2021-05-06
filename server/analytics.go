@@ -8,7 +8,7 @@ func (s *Server) analyticsRoutes() {
 	s.app.Get("/analytics/national/dates/:minDate/:maxDate", s.nationalWithDates)
 
 	// GET departement brief info
-	s.app.Get("/analytics/departement/:id/brief", s.departementBrief)
+	s.app.Get("/analytics/departements/:id/brief", s.departementBrief)
 
 	// GET topDepartements
 	s.app.Get("/analytics/dates/:date/top5", s.top5)
