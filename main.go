@@ -9,5 +9,4 @@ func main() {
 	s := server.New()
 
 	s.Listen(8405)
-
 }

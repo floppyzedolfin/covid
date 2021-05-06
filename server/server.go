@@ -4,13 +4,12 @@ import (
 	"encoding/csv"
 	"fmt"
 	"io"
+	"log"
 	"net/http"
 	"strconv"
 
 	"github.com/gofiber/fiber"
 )
-
-
 
 type Server struct {
 	app *fiber.App
@@ -19,12 +18,11 @@ type Server struct {
 }
 
 type entry struct {
-	Date string `json:"date"`
-	State string `json:"departement"`
-	TestsPerformed int `json:"testsPerformed"`
-	AgeClass int `json:"ageClass"`
-	PositiveTests int `json:"positiveTests"`
-
+	Date           string `json:"date"`
+	State          string `json:"departement"`
+	TestsPerformed int    `json:"testsPerformed"`
+	AgeClass       int    `json:"ageClass"`
+	PositiveTests  int    `json:"positiveTests"`
 }
 
 func New() *Server {
@@ -40,7 +38,7 @@ func New() *Server {
 }
 
 func (s *Server) Listen(port int) {
-	s.app.Listen(fmt.Sprintf(":%d", port))
+	log.Fatal(s.app.Listen(fmt.Sprintf(":%d", port)))
 }
 
 func (s *Server) setupRoutes() {
@@ -54,24 +52,52 @@ func (s *Server) setupRoutes() {
 	s.app.Post("/departements", s.DepartementsWithDates)
 }
 
-func (s Server) DepartementsWithData(c *fiber.Ctx)  {
-	departementIDs := make([]string, 0)
+func (s Server) DepartementsWithData(c *fiber.Ctx) {
+	type departementsResponse struct {
+		Departements []string `json:"departements"`
+	}
+	d := departementsResponse{Departements: make([]string, 0)}
 	for id := range s.entries {
-		departementIDs = append(departementIDs, id)
+		d.Departements = append(d.Departements, id)
 	}
 
-	c.JSON(departementIDs)
+	c.JSON(d)
 }
 
 func (s Server) DepartementWithDate(c *fiber.Ctx) {
+	type departementWithDateResponse struct {
+		Data []entry `json:"data"`
+	}
+	dwd := departementWithDateResponse{Data: make([]entry, 0)}
+	depData, ok := s.entries[c.Params("id")]
+	if !ok {
+		// nothing found, return nothing
+		c.JSON(dwd)
+		return
+	}
+	date := c.Params("date")
+	for _, e := range depData {
+		if e.Date == date {
+			dwd.Data = append(dwd.Data, e)
+		}
+	}
+	c.JSON(dwd)
 }
 
-func (s Server) DepartementsWithDates(c *fiber.Ctx)  {
+func (s Server) DepartementsWithDates(c *fiber.Ctx) {
+	type departementsWithDateResponse struct {
+		Data []entry `json:"data"`
+	}
+
 }
 
+func dateBefore(lhs, rhs string) {
+
+}
 
 func (s *Server) load() error {
 	// first download data
+	fmt.Printf("downloading data")
 	fileURL := "https://www.data.gouv.fr/fr/datasets/r/406c6a23-e283-4300-9484-54e78c8ae675"
 	resp, err := http.Get(fileURL)
 	if err != nil {
@@ -79,6 +105,7 @@ func (s *Server) load() error {
 	}
 
 	r := csv.NewReader(resp.Body)
+	r.Comma = ';'
 	headersOn := true
 	for {
 		line, err := r.Read()
@@ -93,24 +120,24 @@ func (s *Server) load() error {
 			headersOn = false
 			continue
 		}
-		if len(line) != 5 {
-			return fmt.Errorf("unvalid number of fields, expected 5, got %d", len(line))
+		if len(line) != 6 {
+			return fmt.Errorf("unvalid number of fields, expected 5, got %d", line)
 		}
 		// parse the entry
 		var e entry
 		e.State = line[0]
 		e.Date = line[1]
-		e.TestsPerformed, err = strconv.Atoi(line[2])
+		e.PositiveTests, err = strconv.Atoi(line[2])
+		if err != nil {
+			return fmt.Errorf("invalid line %s, can't get positive tests: %w", line, err)
+		}
+		e.TestsPerformed, err = strconv.Atoi(line[3])
 		if err != nil {
 			return fmt.Errorf("invalid line %s, can't get number of tests: %w", line, err)
 		}
-		e.AgeClass, err = strconv.Atoi(line[3])
+		e.AgeClass, err = strconv.Atoi(line[4])
 		if err != nil {
 			return fmt.Errorf("invalid line %s, can't get age class: %w", line, err)
-		}
-		e.PositiveTests, err = strconv.Atoi(line[4])
-		if err != nil {
-			return fmt.Errorf("invalid line %s, can't get positive tests: %w", line, err)
 		}
 		if len(s.entries[e.State]) == 0 {
 			s.entries[e.State] = make([]entry, 1)
