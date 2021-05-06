@@ -1,0 +1,81 @@
+{
+  "data": [
+    {
+      "date": "2020-12-23",
+      "departement": "06",
+      "testsPerformed": 342,
+      "ageClass": 9,
+      "positiveTests": 10
+    },
+    {
+      "date": "2020-12-23",
+      "departement": "06",
+      "testsPerformed": 1580,
+      "ageClass": 19,
+      "positiveTests": 63
+    },
+    {
+      "date": "2020-12-23",
+      "departement": "06",
+      "testsPerformed": 2456,
+      "ageClass": 29,
+      "positiveTests": 109
+    },
+    {
+      "date": "2020-12-23",
+      "departement": "06",
+      "testsPerformed": 2654,
+      "ageClass": 39,
+      "positiveTests": 85
+    },
+    {
+      "date": "2020-12-23",
+      "departement": "06",
+      "testsPerformed": 2621,
+      "ageClass": 49,
+      "positiveTests": 99
+    },
+    {
+      "date": "2020-12-23",
+      "departement": "06",
+      "testsPerformed": 2600,
+      "ageClass": 59,
+      "positiveTests": 81
+    },
+    {
+      "date": "2020-12-23",
+      "departement": "06",
+      "testsPerformed": 1700,
+      "ageClass": 69,
+      "positiveTests": 69
+    },
+    {
+      "date": "2020-12-23",
+      "departement": "06",
+      "testsPerformed": 1192,
+      "ageClass": 79,
+      "positiveTests": 54
+    },
+    {
+      "date": "2020-12-23",
+      "departement": "06",
+      "testsPerformed": 849,
+      "ageClass": 89,
+      "positiveTests": 59
+    },
+    {
+      "date": "2020-12-23",
+      "departement": "06",
+      "testsPerformed": 469,
+      "ageClass": 90,
+      "positiveTests": 30
+    },
+    {
+      "date": "2020-12-23",
+      "departement": "06",
+      "testsPerformed": 16465,
+      "ageClass": 0,
+      "positiveTests": 659
+    }
+  ]
+}

@@ -1,0 +1,312 @@
+{
+  "data": [
+    {
+      "date": "2020-11-02",
+      "departement": "73",
+      "testsPerformed": 78,
+      "ageClass": 9,
+      "positiveTests": 13
+    },
+    {
+      "date": "2020-11-02",
+      "departement": "73",
+      "testsPerformed": 289,
+      "ageClass": 19,
+      "positiveTests": 90
+    },
+    {
+      "date": "2020-11-02",
+      "departement": "73",
+      "testsPerformed": 510,
+      "ageClass": 29,
+      "positiveTests": 148
+    },
+    {
+      "date": "2020-11-02",
+      "departement": "73",
+      "testsPerformed": 518,
+      "ageClass": 39,
+      "positiveTests": 159
+    },
+    {
+      "date": "2020-11-02",
+      "departement": "73",
+      "testsPerformed": 536,
+      "ageClass": 49,
+      "positiveTests": 185
+    },
+    {
+      "date": "2020-11-02",
+      "departement": "73",
+      "testsPerformed": 499,
+      "ageClass": 59,
+      "positiveTests": 186
+    },
+    {
+      "date": "2020-11-02",
+      "departement": "73",
+      "testsPerformed": 355,
+      "ageClass": 69,
+      "positiveTests": 119
+    },
+    {
+      "date": "2020-11-02",
+      "departement": "73",
+      "testsPerformed": 204,
+      "ageClass": 79,
+      "positiveTests": 77
+    },
+    {
+      "date": "2020-11-02",
+      "departement": "73",
+      "testsPerformed": 165,
+      "ageClass": 89,
+      "positiveTests": 69
+    },
+    {
+      "date": "2020-11-02",
+      "departement": "73",
+      "testsPerformed": 91,
+      "ageClass": 90,
+      "positiveTests": 37
+    },
+    {
+      "date": "2020-11-02",
+      "departement": "73",
+      "testsPerformed": 3245,
+      "ageClass": 0,
+      "positiveTests": 1083
+    },
+    {
+      "date": "2020-11-03",
+      "departement": "73",
+      "testsPerformed": 76,
+      "ageClass": 9,
+      "positiveTests": 16
+    },
+    {
+      "date": "2020-11-03",
+      "departement": "73",
+      "testsPerformed": 321,
+      "ageClass": 19,
+      "positiveTests": 94
+    },
+    {
+      "date": "2020-11-03",
+      "departement": "73",
+      "testsPerformed": 426,
+      "ageClass": 29,
+      "positiveTests": 118
+    },
+    {
+      "date": "2020-11-03",
+      "departement": "73",
+      "testsPerformed": 446,
+      "ageClass": 39,
+      "positiveTests": 126
+    },
+    {
+      "date": "2020-11-03",
+      "departement": "73",
+      "testsPerformed": 420,
+      "ageClass": 49,
+      "positiveTests": 128
+    },
+    {
+      "date": "2020-11-03",
+      "departement": "73",
+      "testsPerformed": 458,
+      "ageClass": 59,
+      "positiveTests": 172
+    },
+    {
+      "date": "2020-11-03",
+      "departement": "73",
+      "testsPerformed": 292,
+      "ageClass": 69,
+      "positiveTests": 95
+    },
+    {
+      "date": "2020-11-03",
+      "departement": "73",
+      "testsPerformed": 192,
+      "ageClass": 79,
+      "positiveTests": 78
+    },
+    {
+      "date": "2020-11-03",
+      "departement": "73",
+      "testsPerformed": 185,
+      "ageClass": 89,
+      "positiveTests": 69
+    },
+    {
+      "date": "2020-11-03",
+      "departement": "73",
+      "testsPerformed": 132,
+      "ageClass": 90,
+      "positiveTests": 44
+    },
+    {
+      "date": "2020-11-03",
+      "departement": "73",
+      "testsPerformed": 2948,
+      "ageClass": 0,
+      "positiveTests": 940
+    },
+    {
+      "date": "2020-11-02",
+      "departement": "74",
+      "testsPerformed": 213,
+      "ageClass": 9,
+      "positiveTests": 44
+    },
+    {
+      "date": "2020-11-02",
+      "departement": "74",
+      "testsPerformed": 834,
+      "ageClass": 19,
+      "positiveTests": 221
+    },
+    {
+      "date": "2020-11-02",
+      "departement": "74",
+      "testsPerformed": 1023,
+      "ageClass": 29,
+      "positiveTests": 303
+    },
+    {
+      "date": "2020-11-02",
+      "departement": "74",
+      "testsPerformed": 1121,
+      "ageClass": 39,
+      "positiveTests": 369
+    },
+    {
+      "date": "2020-11-02",
+      "departement": "74",
+      "testsPerformed": 1078,
+      "ageClass": 49,
+      "positiveTests": 369
+    },
+    {
+      "date": "2020-11-02",
+      "departement": "74",
+      "testsPerformed": 1052,
+      "ageClass": 59,
+      "positiveTests": 354
+    },
+    {
+      "date": "2020-11-02",
+      "departement": "74",
+      "testsPerformed": 551,
+      "ageClass": 69,
+      "positiveTests": 194
+    },
+    {
+      "date": "2020-11-02",
+      "departement": "74",
+      "testsPerformed": 360,
+      "ageClass": 79,
+      "positiveTests": 132
+    },
+    {
+      "date": "2020-11-02",
+      "departement": "74",
+      "testsPerformed": 267,
+      "ageClass": 89,
+      "positiveTests": 67
+    },
+    {
+      "date": "2020-11-02",
+      "departement": "74",
+      "testsPerformed": 187,
+      "ageClass": 90,
+      "positiveTests": 61
+    },
+    {
+      "date": "2020-11-02",
+      "departement": "74",
+      "testsPerformed": 6686,
+      "ageClass": 0,
+      "positiveTests": 2114
+    },
+    {
+      "date": "2020-11-03",
+      "departement": "74",
+      "testsPerformed": 194,
+      "ageClass": 9,
+      "positiveTests": 36
+    },
+    {
+      "date": "2020-11-03",
+      "departement": "74",
+      "testsPerformed": 732,
+      "ageClass": 19,
+      "positiveTests": 179
+    },
+    {
+      "date": "2020-11-03",
+      "departement": "74",
+      "testsPerformed": 978,
+      "ageClass": 29,
+      "positiveTests": 292
+    },
+    {
+      "date": "2020-11-03",
+      "departement": "74",
+      "testsPerformed": 1068,
+      "ageClass": 39,
+      "positiveTests": 328
+    },
+    {
+      "date": "2020-11-03",
+      "departement": "74",
+      "testsPerformed": 1017,
+      "ageClass": 49,
+      "positiveTests": 326
+    },
+    {
+      "date": "2020-11-03",
+      "departement": "74",
+      "testsPerformed": 863,
+      "ageClass": 59,
+      "positiveTests": 314
+    },
+    {
+      "date": "2020-11-03",
+      "departement": "74",
+      "testsPerformed": 484,
+      "ageClass": 69,
+      "positiveTests": 181
+    },
+    {
+      "date": "2020-11-03",
+      "departement": "74",
+      "testsPerformed": 344,
+      "ageClass": 79,
+      "positiveTests": 144
+    },
+    {
+      "date": "2020-11-03",
+      "departement": "74",
+      "testsPerformed": 265,
+      "ageClass": 89,
+      "positiveTests": 91
+    },
+    {
+      "date": "2020-11-03",
+      "departement": "74",
+      "testsPerformed": 130,
+      "ageClass": 90,
+      "positiveTests": 58
+    },
+    {
+      "date": "2020-11-03",
+      "departement": "74",
+      "testsPerformed": 6075,
+      "ageClass": 0,
+      "positiveTests": 1949
+    }
+  ]
+}

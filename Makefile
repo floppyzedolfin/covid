@@ -6,3 +6,6 @@ test:
 
 run: build
 	./bin/covid.out
+
+fulltest:
+	./test_covid.sh
