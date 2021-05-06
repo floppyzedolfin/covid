@@ -61,12 +61,28 @@ Quelques questions :
 
 ============
 
-API
-- curl localhost:8405/departements => renvoie la liste des départements avec de la donnée
-- curl localhost:8405/departement/${DEPARTEMENT_ID}/${DATE} => renvoie les données pour ce département à la date voulue
-- curl localhost:8405/departements/dates/${MIN_DATE}/${MAX_DATE} => renvoie les données des départements entre les dates voulues
+API:
+- curl localhost:8405/api/departements => renvoie la liste des départements avec de la donnée
+- curl localhost:8405/api/departement/${DEPARTEMENT_ID}/date/${DATE} => renvoie les données pour ce département à la date voulue
+- curl localhost:8405/api/departements/${DEPARTEMENT_IDS}/dates/${MIN_DATE}/${MAX_DATE} => renvoie les données des départements entre les dates voulues -- "${DEPARTEMENT_IDS}" est une liste séparée par des virgules (`01,02,75`)
+
+ADMIN:
+- curl localhost:8405/admin/load => charge le document depuis le site du gouvernement
+
+ANALYTICS:
+- curl localhost:8405/analytics/national/dates/${MIN_DATE}/${MAX_DATE} => renvoie des informations niveau national
+- curl localhost:8405/analytics/departement/${DEPARTEMENT_ID}/brief => renvoie un résumé d'un département
+- curl localhost:8405/analytics/dates/${DATE}/top5 => renvoie les 5 départements ayant le plus de tests postitifs par catégorie d'age
 
 
 Choix architecturaux:
 - Passer par fiber pour avoir du code rapide à écrire (ma premiere piste était d'utiliser des protobuff, pour un gos coût et pas un grand gain)
 - Exposer des endpoints avec des paths "intuitifs"
+
+
+- Comment automatiser la mise à jour des données : on peut utiliser un `timer.Tick()` qui ira régulièrement mettre à jour le contenu de la base du server en le retéléchargeant depuis la source.
+- Pour une intégration front-end, ce code écrit en 2h demande pas mal de gestion d'erreur actuellement absente, de couverture de tests. Par ailleurs, télécharger un fichier de 10mo tous les jours n'est pas forcément le meilleur moyen, il doit y avoir une interface exposée quelque part.
+- pour des BDDs, on peut utiliser godog (de cucumber)
+- J'ai commencé ce test en voulant utiliser gRPC, mais ça s'est avéré trop coûteux en temps (30 min). Ce test est sous pression, et plus long que la plupart des autres tests que j'ai réalisés. Il est néanmoins intéressant car réalisable dans le temps imparti. Cependant, la majorité des endpoints se ressemble sans grande différence, on se retrouve à écrire souvent la même chose.
+L'endpoint des différents ages est le plus intéressant une fois qu'on en a fait 2 précédents
+
