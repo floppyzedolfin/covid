@@ -7,14 +7,15 @@ import (
 	"log"
 	"net/http"
 	"strconv"
+	"time"
 
 	"github.com/gofiber/fiber"
 )
 
 type Server struct {
 	app *fiber.App
-	// entries mapped on departement name
-	entries map[string][]entry
+	// data mapped on departement name
+	data map[string][]entry
 }
 
 type entry struct {
@@ -27,7 +28,7 @@ type entry struct {
 
 func New() *Server {
 	s := Server{}
-	s.entries = make(map[string][]entry, 0)
+	s.data = make(map[string][]entry, 0)
 	s.app = fiber.New()
 	err := s.load()
 	if err != nil {
@@ -49,7 +50,7 @@ func (s *Server) setupRoutes() {
 	s.app.Get("/departement/:id/:date", s.DepartementWithDate)
 
 	// POST on departements with range of dates
-	s.app.Post("/departements", s.DepartementsWithDates)
+	s.app.Get("/departements/dates/:minDate/:maxDate", s.DepartementsWithDates)
 }
 
 func (s Server) DepartementsWithData(c *fiber.Ctx) {
@@ -57,7 +58,7 @@ func (s Server) DepartementsWithData(c *fiber.Ctx) {
 		Departements []string `json:"departements"`
 	}
 	d := departementsResponse{Departements: make([]string, 0)}
-	for id := range s.entries {
+	for id := range s.data {
 		d.Departements = append(d.Departements, id)
 	}
 
@@ -69,7 +70,7 @@ func (s Server) DepartementWithDate(c *fiber.Ctx) {
 		Data []entry `json:"data"`
 	}
 	dwd := departementWithDateResponse{Data: make([]entry, 0)}
-	depData, ok := s.entries[c.Params("id")]
+	depData, ok := s.data[c.Params("id")]
 	if !ok {
 		// nothing found, return nothing
 		c.JSON(dwd)
@@ -88,11 +89,25 @@ func (s Server) DepartementsWithDates(c *fiber.Ctx) {
 	type departementsWithDateResponse struct {
 		Data []entry `json:"data"`
 	}
-
+	dwd := departementsWithDateResponse{Data: make([]entry, 0)}
+	minDate := c.Params("minDate")
+	maxDate := c.Params("maxDate")
+	for _, entries := range s.data {
+		for _, entry := range entries {
+			if dateBefore(minDate, entry.Date) && dateBefore(entry.Date, maxDate) {
+				dwd.Data = append(dwd.Data)
+			}
+		}
+	}
+	return c.JSON(dwd)
 }
 
-func dateBefore(lhs, rhs string) {
-
+func dateBefore(lhs, rhs string) bool {
+	// we can compare strings :)
+	layoutForm := "2006-01-02"
+	tLeft, _ := time.Parse(layoutForm, lhs)
+	tRight, _ := time.Parse(layoutForm, rhs)
+	return tLeft.Before(tRight)
 }
 
 func (s *Server) load() error {
@@ -139,11 +154,11 @@ func (s *Server) load() error {
 		if err != nil {
 			return fmt.Errorf("invalid line %s, can't get age class: %w", line, err)
 		}
-		if len(s.entries[e.State]) == 0 {
-			s.entries[e.State] = make([]entry, 1)
-			s.entries[e.State][0] = e
+		if len(s.data[e.State]) == 0 {
+			s.data[e.State] = make([]entry, 1)
+			s.data[e.State][0] = e
 		} else {
-			s.entries[e.State] = append(s.entries[e.State], e)
+			s.data[e.State] = append(s.data[e.State], e)
 		}
 	}
 	return nil
