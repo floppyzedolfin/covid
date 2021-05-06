@@ -13,7 +13,7 @@ function comparejson {
 }
 
 function cleanup {
-  kill -9 $(ps | awk '/covid.out/{print $1}')
+  kill -9 $(ps | awk '/covid.out/{print $1}') > /dev/null
 }
 
 # run the binary
@@ -29,37 +29,37 @@ done
 trap cleanup EXIT
 
 # load the database
-curl localhost:8405/admin/load
+curl -s localhost:8405/admin/load
 if [[ "$?" != 0 ]]; then
   echo "error while loading database"
   exit 1
 fi
 
 # test api endpoints
-curl localhost:8405/api/departements -o testdata/obtained_departements.json
+curl -s localhost:8405/api/departements -o testdata/obtained_departements.json
 comparejson testdata/result_departements.json testdata/obtained_departements.json
 
-curl localhost:8405/api/departements/06/dates/2020-12-23 -o testdata/obtained_departement_date.json
+curl -s localhost:8405/api/departements/06/dates/2020-12-23 -o testdata/obtained_departement_date.json
 comparejson testdata/result_departement_date.json testdata/obtained_departement_date.json
 
-curl localhost:8405/api/departements/73,74/dates/2020-11-01/2020-11-04 -o testdata/obtained_departements_dates.json
+curl -s localhost:8405/api/departements/73,74/dates/2020-11-01/2020-11-04 -o testdata/obtained_departements_dates.json
 comparejson testdata/result_departements_dates.json testdata/obtained_departements_dates.json
 
-curl localhost:8405/api/rangeDates -o testdata/obtained_range_dates.json
+curl -s localhost:8405/api/rangeDates -o testdata/obtained_range_dates.json
 comparejson testdata/result_range_dates.json testdata/obtained_range_dates.json
 
-curl localhost:8405/api/classAges -o testdata/obtained_classages.json
+curl -s localhost:8405/api/classAges -o testdata/obtained_classages.json
 comparejson testdata/result_classages.json testdata/obtained_classages.json
 
 
 # test analytics endpoints
-curl localhost:8405/analytics/national/dates/2020-07-08/2020-07-12 -o testdata/obtained_national.json
+curl -s localhost:8405/analytics/national/dates/2020-07-08/2020-07-12 -o testdata/obtained_national.json
 comparejson testdata/result_national.json testdata/obtained_national.json
 
-curl localhost:8405/analytics/departements/33/brief -o testdata/obtained_brief.json
+curl -s localhost:8405/analytics/departements/33/brief -o testdata/obtained_brief.json
 comparejson testdata/result_brief.json testdata/obtained_brief.json
 
-curl localhost:8405/analytics/dates/2020-10-27/top5 -o testdata/obtained_top5.json
+curl -s localhost:8405/analytics/dates/2020-10-27/top5 -o testdata/obtained_top5.json
 comparejson testdata/result_top5.json testdata/obtained_top5.json
 
-exit 0
+echo "OK"
