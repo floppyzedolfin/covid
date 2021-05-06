@@ -10,20 +10,21 @@ import (
 	"github.com/gofiber/fiber"
 )
 
-
 // adminRoutes adds the admin routes
 func (s *Server) adminRoutes() {
 	// GET to load data from source
 	s.app.Get("/admin/load", s.load)
 }
 
+// gouvFile is a "global var" because I want to overwrite it in UTs
+var gouvFile = "https://www.data.gouv.fr/fr/datasets/r/406c6a23-e283-4300-9484-54e78c8ae675"
+
 // loads downloads the data from the remote server (gouv.fr) and stores it in this service
 func (s *Server) load(c *fiber.Ctx) {
 	// first download data
-	fileURL := "https://www.data.gouv.fr/fr/datasets/r/406c6a23-e283-4300-9484-54e78c8ae675"
-	resp, err := http.Get(fileURL)
+	resp, err := http.Get(gouvFile)
 	if err != nil {
-		panic(fmt.Sprintf("unable to download file %s: %w", fileURL, err))
+		panic(fmt.Sprintf("unable to download file %s: %s", gouvFile, err.Error()))
 	}
 
 	// parse the data
@@ -37,14 +38,14 @@ func (s *Server) load(c *fiber.Ctx) {
 			break
 		}
 		if err != nil {
-			panic(fmt.Sprintf("unable to read entry: %w", err))
+			panic(fmt.Sprintf("unable to read entry: %s", err.Error()))
 		}
 		if headersOn {
 			headersOn = false
 			continue
 		}
 		if len(line) != 6 {
-			panic(fmt.Sprintf("unvalid number of fields, expected 5, got %d", line))
+			panic(fmt.Sprintf("unvalid number of fields, expected 5, got %s", line))
 		}
 		// parse the entry
 		var e entry
@@ -52,15 +53,15 @@ func (s *Server) load(c *fiber.Ctx) {
 		e.Date = line[1]
 		e.PositiveTests, err = strconv.Atoi(line[2])
 		if err != nil {
-			panic(fmt.Sprintf("invalid line %s, can't get positive tests: %w", line, err))
+			panic(fmt.Sprintf("invalid line %s, can't get positive tests: %s", line, err.Error()))
 		}
 		e.TestsPerformed, err = strconv.Atoi(line[3])
 		if err != nil {
-			panic(fmt.Sprintf("invalid line %s, can't get number of tests: %w", line, err))
+			panic(fmt.Sprintf("invalid line %s, can't get number of tests: %s", line, err.Error()))
 		}
 		e.AgeClass, err = strconv.Atoi(line[4])
 		if err != nil {
-			panic(fmt.Sprintf("invalid line %s, can't get age class: %w", line, err))
+			panic(fmt.Sprintf("invalid line %s, can't get age class: %s", line, err.Error()))
 		}
 		if len(s.data[e.State]) == 0 {
 			s.data[e.State] = make([]entry, 1)

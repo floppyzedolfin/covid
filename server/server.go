@@ -7,6 +7,7 @@ import (
 	"github.com/gofiber/fiber"
 )
 
+// Server plugs onto the endpoints and can Listen() to a port
 type Server struct {
 	app *fiber.App
 	// data mapped on departement name
@@ -25,7 +26,9 @@ func (s *Server) Listen(port int) {
 	log.Fatal(s.app.Listen(fmt.Sprintf(":%d", port)))
 }
 
+// setupRoutes sets up the routes (!) of the available endpoints
 func (s *Server) setupRoutes() {
+	// we have 3 kinds of routes, admin, api and analytics
 	s.adminRoutes()
 	s.apiRoutes()
 	s.analyticsRoutes()
